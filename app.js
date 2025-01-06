@@ -118,7 +118,7 @@ app.post("/login", (request, response)=>{
 })
 
 
-app.listen(port,function(err){
+app.listen(port || 8080,function(err){
     if(err){
         console.log("Error int running the server:",err);
     }
