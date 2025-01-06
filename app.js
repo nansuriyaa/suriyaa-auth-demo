@@ -130,6 +130,12 @@ app.get("/free-endpoint", (request, response) => {
     response.json({ message: "You are free to access me anytime" });
 });
   
+
+// free endpoint
+app.get("/", (request, response) => {
+    response.json({ message: "Hey your server is up and running this is your server response" });
+});
+
 // authentication endpoint
 app.get("/auth-endpoint", auth, (request, response) => {
     try{
