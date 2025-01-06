@@ -10,6 +10,9 @@ var bodyParser = require('body-parser')
 const jwt = require('jsonwebtoken')
 
 const app = express();
+require('dotenv').config()
+
+port = process.env.PORT || 8000;
 
 
 // Middleware to parse JSON
@@ -118,7 +121,7 @@ app.post("/login", (request, response)=>{
 })
 
 
-app.listen(port || 8080,function(err){
+app.listen(port,function(err){
     if(err){
         console.log("Error int running the server:",err);
     }
