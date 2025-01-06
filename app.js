@@ -1,6 +1,6 @@
 const dbConnect = require('./db/dbconnect')
 const bcrypt = require("bcrypt");
-const port = 8000;
+
 const auth = require("./auth");
 
 const User = require("./db/userModel");
@@ -12,7 +12,23 @@ const jwt = require('jsonwebtoken')
 const app = express();
 require('dotenv').config()
 
-port = process.env.PORT || 8000;
+const port = process.env.PORT || 8000;
+
+
+// Curb Cores Error by adding a header here
+app.use((req, res, next) => {
+    res.setHeader("Access-Control-Allow-Origin", "*");
+    res.setHeader(
+      "Access-Control-Allow-Headers",
+      "Origin, X-Requested-With, Content, Accept, Content-Type, Authorization"
+    );
+    res.setHeader(
+      "Access-Control-Allow-Methods",
+      "GET, POST, PUT, DELETE, PATCH, OPTIONS"
+    );
+    next();
+});
+
 
 
 // Middleware to parse JSON
@@ -92,7 +108,7 @@ app.post("/login", (request, response)=>{
                         userId: user._id,
                         userEmail: user.email
                     },
-                    'Random-token',
+                    process.env.JWT_SECRET,
                     {expiresIn: '24h'}
 
                 );
@@ -151,16 +167,3 @@ app.get("/auth-endpoint", auth, (request, response) => {
 
 dbConnect()
 
-// Curb Cores Error by adding a header here
-app.use((req, res, next) => {
-    res.setHeader("Access-Control-Allow-Origin", "*");
-    res.setHeader(
-      "Access-Control-Allow-Headers",
-      "Origin, X-Requested-With, Content, Accept, Content-Type, Authorization"
-    );
-    res.setHeader(
-      "Access-Control-Allow-Methods",
-      "GET, POST, PUT, DELETE, PATCH, OPTIONS"
-    );
-    next();
-});
